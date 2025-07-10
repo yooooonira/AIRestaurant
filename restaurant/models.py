@@ -52,7 +52,7 @@ class Restaurant(models.Model):
     category = models.ForeignKey(
         "RestaurantCategory", on_delete=models.SET_NULL, null=True, blank=True
     )
-    tags = models.ManyToManyField("태그", blank=True)
+    tags = models.ManyToManyField("Tag", blank=True)
     region = models.ForeignKey(
         "Region",
         on_delete=models.SET_NULL,
@@ -154,7 +154,7 @@ class Review(models.Model):
     )  # 양의 정수만 허용하는데, 범위는 1~5 (실제 범위는 0 ~ 30,000 이다.)
     restaurant = models.ForeignKey("Restaurant", on_delete=models.CASCADE)
     social_channel = models.ForeignKey(
-        "social_channel", on_delete=models.SET_NULL, null=True, blank=True
+        "Socialchannel", on_delete=models.SET_NULL, null=True, blank=True
     )
     created_at = models.DateTimeField("생성일", auto_now_add=True, db_index=True)
     updated_at = models.DateTimeField("수정일", auto_now=True, db_index=True)
