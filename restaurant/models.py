@@ -50,11 +50,11 @@ class Restaurant(models.Model):
     end_time = models.TimeField("영업 종료시간", null=True, blank=True)
     last_order_time = models.TimeField("마지막 주문시간", null=True, blank=True)
     category = models.ForeignKey(
-        "식당 카테고리", on_delete=models.SET_NULL, null=True, blank=True
+        "RestaurantCategory", on_delete=models.SET_NULL, null=True, blank=True
     )
     tags = models.ManyToManyField("태그", blank=True)
     region = models.ForeignKey(
-        "지역",
+        "Region",
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -101,7 +101,7 @@ class RestaurantCategory(models.Model):
 
 
 class RestaurantImage(models.Model):
-    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
+    restaurant = models.ForeignKey("Restaurant", on_delete=models.CASCADE)
     is_representative = models.BooleanField("대표 이미지 여부", default=False)
     order = models.PositiveIntegerField("순서", null=True, blank=True)
     name = models.CharField("이름", max_length=100, null=True, blank=True)
@@ -125,7 +125,7 @@ class RestaurantImage(models.Model):
 
 
 class RestaurantMenu(models.Model):
-    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
+    restaurant = models.ForeignKey("Restaurant", on_delete=models.CASCADE)
     name = models.CharField("이름", max_length=100)
     price = models.PositiveIntegerField("가격", default=0)
     image = models.ImageField(
@@ -152,7 +152,7 @@ class Review(models.Model):
     rating = models.PositiveSmallIntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(5)]
     )  # 양의 정수만 허용하는데, 범위는 1~5 (실제 범위는 0 ~ 30,000 이다.)
-    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
+    restaurant = models.ForeignKey("Restaurant", on_delete=models.CASCADE)
     social_channel = models.ForeignKey(
         "social_channel", on_delete=models.SET_NULL, null=True, blank=True
     )
@@ -168,7 +168,7 @@ class Review(models.Model):
 
 
 class ReviewImage(models.Model):
-    review = models.ForeignKey(Review, on_delete=models.CASCADE)
+    review = models.ForeignKey("Review", on_delete=models.CASCADE)
     name = models.CharField("후기 이미지 이름", max_length=20)
     image = models.ImageField(
         "후기 이미지", upload_to="review-Image", null=True, blank=True
@@ -180,18 +180,18 @@ class ReviewImage(models.Model):
         verbose_name = "리뷰이미지"
         verbose_name_plural = "리뷰이미지s"
 
-    def str(self):
+    def __str__(self):
         return f"{self.id}:{self.image}"
 
 
-class Social_channel(models.Model):
+class Socialchannel(models.Model):
     name = models.CharField("SNS", max_length=10)
 
     class Meta:
         verbose_name = "SNS"
         verbose_name_plural = "SNSs"
 
-    def str(self):
+    def __str__(self):
         return self.name
 
 
@@ -204,7 +204,7 @@ class Tag(models.Model):
         verbose_name = "태그"
         verbose_name_plural = "태그s"
 
-    def str(self):
+    def __str__(self):
         return self.name
 
 
@@ -218,5 +218,5 @@ class Region(models.Model):
         verbose_name_plural = "지역s"
         unique_together = ("sido", "sigungu", "eupmyeondong")
 
-    def str(self):
+    def __str__(self):
         return f"{self.sido} {self.sigungu} {self.eupmyeondong}"
