@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-gi+*4djbbitc&8!_jx7a1l1essli@-kcxwwfi5c!azsujzc#&@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]  # "*" 추가함
 
 
 # Application definition
@@ -103,7 +103,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "ko-kr"
 
 TIME_ZONE = "UTC"
 
@@ -121,3 +121,8 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# 이미지 하기 위해서
+MEDIA_URL = "media/"
+MEDIA_ROOT = BASE_DIR / "media"
